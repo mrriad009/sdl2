@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <nav class="nav">
+                    <a href="#" class="nav-brand">
+                        📚 AttendanceHub
+                    </a>
+                    <ul class="nav-links">
+                        <li><a href="#dashboard" class="nav-link active">Dashboard</a></li>
+                        <li><a href="#analytics" class="nav-link">Analytics</a></li>
+                        <li><a href="#register" class="nav-link">Register Student</a></li>
+                        <li><a href="#admin" class="nav-link">Admin</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="fade-in">
+                    <!-- Statistics Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">TOTAL STUDENTS</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">85.2%</div>
+                            <div class="stat-label">AVERAGE ATTENDANCE</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">2</div>
+                            <div class="stat-label">LOW ATTENDANCE ALERTS</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">4</div>
+                            <div class="stat-label">PRESENT TODAY</div>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Grid -->
+                    <div class="dashboard-grid">
+                        <!-- Student Search -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>🔍 Student Search</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="studentId" class="form-label">Student ID</label>
+                                    <input type="text" id="studentId" class="form-input" placeholder="Enter Student ID">
+                                </div>
+                                <button class="btn btn-primary w-full">Search Student</button>
+                            </div>
+                        </div>
+
+                        <!-- Department Filter -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>🏢 Department Filter</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="department" class="form-label">Select Department</label>
+                                    <select id="department" class="form-select">
+                                        <option value="">--Select Department--</option>
+                                        <option value="Computer Science">Computer Science</option>
+                                        <option value="Electrical Engineering">Electrical Engineering</option>
+                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-primary w-full">View Department</button>
+                            </div>
+                        </div>
+
+                        <!-- Subject Attendance -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>📚 Subject Attendance</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="subject" class="form-label">Select Subject</label>
+                                    <select id="subject" class="form-select">
+                                        <option value="">--Select Subject--</option>
+                                        <option value="Mathematics">Mathematics</option>
+                                        <option value="Physics">Physics</option>
+                                        <option value="Chemistry">Chemistry</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-primary w-full">View Attendance</button>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>⚡ Quick Actions</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="flex flex-col gap-3">
+                                    <button onclick="showSection(\'analytics\' )" class="btn btn-primary">📊 View Analytics</button>
+                                    <button onclick="showSection(\'register\')" class="btn btn-success">➕ Register New Student</button>
+                                    <button onclick="showSection(\'admin\')" class="btn btn-secondary">👨‍💼 Admin Panel</button>
+                                    <button onclick="exportData()" class="btn btn-outline">📊 Export Report</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Students Table -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h2>👥 All Students</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-wrapper">
+                                <table class="table" id="attendance-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Department</th>
+                                            <th>Attendance</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1001</td>
+                                            <td>John Smith</td>
+                                            <td>john.smith@university.edu</td>
+                                            <td>Computer Science</td>
+                                            <td>
+                                                <div class="flex items-center gap-2">
+                                                    <div class="progress-bar" style="width: 80px;">
+                                                        <div class="progress-fill" style="width: 85%"></div>
+                                                    </div>
+                                                    <span>85%</span>
+                                                </div>
+                                            </td>
+                                            <td><span class="status-badge status-success">Good</span></td>
+                                            <td><button class="btn btn-sm btn-primary">View</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>1002</td>
+                                            <td>Sarah Johnson</td>
+                                            <td>sarah.johnson@university.edu</td>
+                                            <td>Electrical Engineering</td>
+                                            <td>
+                                                <div class="flex items-center gap-2">
+                                                    <div class="progress-bar" style="width: 80px;">
+                                                        <div class="progress-fill" style="width: 92%"></div>
+                                                    </div>
+                                                    <span>92%</span>
+                                                </div>
+                                            </td>
+                                            <td><span class="status-badge status-success">Excellent</span></td>
+                                            <td><button class="btn btn-sm btn-primary">View</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>1003</td>
+                                            <td>Mike Davis</td>
+                                            <td>mike.davis@university.edu</td>
+                                            <td>Mechanical Engineering</td>
+                                            <td>
+                                                <div class="flex items-center gap-2">
+                                                    <div class="progress-bar" style="width: 80px;">
+                                                        <div class="progress-fill" style="width: 78%"></div>
+                                                    </div>
+                                                    <span>78%</span>
+                                                </div>
+                                            </td>
+                                            <td><span class="status-badge status-warning">Average</span></td>
+                                            <td><button class="btn btn-sm btn-primary">View</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>1004</td>
+                                            <td>Emily Brown</td>
+                                            <td>emily.brown@university.edu</td>
+                                            <td>Computer Science</td>
+                                            <td>
+                                                <div class="flex items-center gap-2">
+                                                    <div class="progress-bar" style="width: 80px;">
+                                                        <div class="progress-fill" style="width: 88%"></div>
+                                                    </div>
+                                                    <span>88%</span>
+                                                </div>
+                                            </td>
+                                            <td><span class="status-badge status-success">Good</span></td>
+                                            <td><button class="btn btn-sm btn-primary">View</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>1005</td>
+                                            <td>David Wilson</td>
+                                            <td>david.wilson@university.edu</td>
+                                            <td>Electrical Engineering</td>
+                                            <td>
+                                                <div class="flex items-center gap-2">
+                                                    <div class="progress-bar" style="width: 80px;">
+                                                        <div class="progress-fill" style="width: 95%"></div>
+                                                    </div>
+                                                    <span>95%</span>
+                                                </div>
+                                            </td>
+                                            <td><span class="status-badge status-success">Excellent</span></td>
+                                            <td><button class="btn btn-sm btn-primary">View</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics" class="section">
+                <div class="fade-in">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h1>📊 Analytics Dashboard</h1>
+                            <p>Comprehensive attendance analytics and insights</p>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>🏢 Department Performance</h3>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="departmentChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Weekly Attendance Trend -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>📈 Weekly Attendance Trend</h3>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="weeklyTrendChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Register Section -->
+            <section id="register" class="section">
+                <div class="fade-in">
+                    <div class="card" style="max-width: 600px; margin: 0 auto;">
+                        <div class="card-header">
+                            <h1>👨‍🎓 Register New Student</h1>
+                            <p>Add a new student to the attendance management system</p>
+                        </div>
+                        
+                        <div class="card-body">
+                            <form id="registrationForm">
+                                <div class="form-group">
+                                    <label for="studentIdReg" class="form-label">Student ID *</label>
+                                    <input type="number" id="studentIdReg" class="form-input" 
+                                           placeholder="Enter unique student ID" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="studentName" class="form-label">Full Name *</label>
+                                    <input type="text" id="studentName" class="form-input" 
+                                           placeholder="Enter student\'s full name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="studentEmail" class="form-label">Email Address *</label>
+                                    <input type="email" id="studentEmail" class="form-input" 
+                                           placeholder="Enter student\'s email address" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="studentDept" class="form-label">Department *</label>
+                                    <select id="studentDept" class="form-select" required>
+                                        <option value="">--Select Department--</option>
+                                        <option value="Computer Science">Computer Science</option>
+                                        <option value="Electrical Engineering">Electrical Engineering</option>
+                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                    </select>
+                                </div>
+
+                                <div class="flex gap-3">
+                                    <button type="submit" class="btn btn-primary flex-1">
+                                        ➕ Register Student
+                                    </button>
+                                    <button type="reset" class="btn btn-outline">
+                                        🔄 Clear Form
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Admin Section -->
+            <section id="admin" class="section">
+                <div class="fade-in">
+                    <div class="card">
+                        <div class="card-header">
+                            <h1>👨‍💼 Admin Panel</h1>
+                            <p>Manage attendance records and system settings</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="dashboard-grid">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3>📝 Manage Attendance</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Mark attendance for students and manage records.</p>
+                                        <button class="btn btn-primary">Manage Attendance</button>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3>👀 View Records</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>View and analyze attendance records.</p>
+                                        <button class="btn btn-secondary">View Records</button>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3>📊 Export Data</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Export attendance data in various formats.</p>
+                                        <button class="btn btn-outline">Export Data</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2025 Student Attendance Management System. Built for university projects.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Initialize charts when analytics section is shown
+        function initializeCharts() {
+            // Department Performance Chart
+            const deptCtx = document.getElementById(\'departmentChart\');
+            if (deptCtx) {
+                new Chart(deptCtx, {
+                    type: \'bar\',
+                    data: {
+                        labels: [\'Computer Science\', \'Electrical Engineering\', \'Mechanical Engineering\'],
+                        datasets: [{
+                            label: \'Average Attendance %\',
+                            data: [86.5, 93.5, 78.0],
+                            backgroundColor: [\'#4f46e5\', \'#10b981\', \'#f59e0b\'],
+                            borderColor: [\'#4338ca\', \'#059669\', \'#d97706\'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + \'%\';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Weekly Trend Chart
+            const trendCtx = document.getElementById(\'weeklyTrendChart\');
+            if (trendCtx) {
+                new Chart(trendCtx, {
+                    type: \'line\',
+                    data: {
+                        labels: [\'Mon\', \'Tue\', \'Wed\', \'Thu\', \'Fri\', \'Sat\', \'Sun\'],
+                        datasets: [{
+                            label: \'Attendance Rate %\',
+                            data: [85, 88, 92, 87, 90, 85, 89],
+                            borderColor: \'#4f46e5\',
+                            backgroundColor: \'rgba(79, 70, 229, 0.1)\,\n                            tension: 0.4,\n                            fill: true\n                        }]\n                    },\n                    options: {\n                        responsive: true,\n                        plugins: {\n                            legend: { display: false }\n                        },\n                        scales: {\n                            y: {\n                                beginAtZero: true,\n                                max: 100,\n                                ticks: {\n                                    callback: function(value) {\n                                        return value + \'%\';\n                                    }\n                                }\n                            }\n                        }\n                    }\n                });\n            }\n        }\n\n        // Show section function\n        function showSection(sectionId) {\n            // Hide all sections\n            document.querySelectorAll(\'.section\').forEach(section => {\n                section.classList.remove(\'active\');\n            });\n            \n            // Remove active class from all nav links\n            document.querySelectorAll(\'.nav-link\').forEach(link => {\n                link.classList.remove(\'active\');\n            });\n            \n            // Show selected section\n            document.getElementById(sectionId).classList.add(\'active\');\n            \n            // Add active class to corresponding nav link\n            document.querySelector(`[href=\"#${sectionId}\"]`).classList.add(\'active\');\n            \n            // Initialize charts if analytics section is shown\n            if (sectionId === \'analytics\') {\n                setTimeout(initializeCharts, 100);\n            }\n        }\n\n        // Navigation event listeners\n        document.querySelectorAll(\'.nav-link\').forEach(link => {\n            link.addEventListener(\'click\', function(e) {\n                e.preventDefault();\n                const sectionId = this.getAttribute(\'href\').substring(1);\n                showSection(sectionId);\n            });\n        });\n\n        // Registration form handler\n        document.getElementById(\'registrationForm\').addEventListener(\'submit\', function(e) {\n            e.preventDefault();\n            showNotification(\'Student registered successfully! (Demo mode)\, \'success\');\n            this.reset();\n        });\n\n        // Export function\n        function exportData() {\n            showNotification(\'Export functionality available in full version\', \'info\');\n        }\n\n        // Initialize on page load\n        document.addEventListener(\'DOMContentLoaded\', function() {\n            showSection(\'dashboard\');\n        });\n    </script>\n</body>\n</html>
